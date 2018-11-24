@@ -3,6 +3,14 @@
 
 using namespace std;
 
+int Screen::exit = 0;
+HDC Screen::screenDc = NULL;
+HBITMAP Screen::screenOb = NULL;
+HBITMAP Screen::screenHb = NULL;
+HWND Screen::screenHandle = NULL;
+unsigned char* Screen::screenFb = nullptr;
+long Screen::screenPitch = 0;
+
 Screen::Screen()
 {
 	
@@ -12,7 +20,7 @@ Screen::~Screen()
 {
 }
 
-CreateScreenResult Screen::Create(int w, int h, const TCHAR *title)
+int Screen::Create(int w, int h, const TCHAR *title)
 {
     WNDCLASS wc = { CS_BYTEALIGNCLIENT, (WNDPROC)screenEvents, 0, 0, 0,
         NULL, NULL, NULL, NULL, _T("SCREEN3.1415926") };
@@ -77,7 +85,9 @@ LRESULT Screen::screenEvents(HWND hWnd, UINT msg,
 {
 	switch (msg)
 	{
-	case WM_CLOSE:exit = 1; break;
+	case WM_CLOSE:
+        exit = 1; 
+        break;
 	default:
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 		break;
@@ -85,7 +95,7 @@ LRESULT Screen::screenEvents(HWND hWnd, UINT msg,
 	return 0;
 }
 
-int Screen::ScreenClose() {
+void Screen::ScreenClose() {
 	if (screenDc) {
 		if (screenOb) {
 			SelectObject(screenDc, screenOb);
@@ -102,7 +112,6 @@ int Screen::ScreenClose() {
 		CloseWindow(screenHandle);
 		screenHandle = NULL;
 	}
-	return 0;
 }
 
 void Screen::screenDispatch() 

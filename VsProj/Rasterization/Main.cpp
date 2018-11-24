@@ -10,9 +10,8 @@ using namespace std;
 
 int main()
 {
-	Device nowDevice;
-	int rdStates[] = { RENDER_STATE_WIREFREAME,RENDER_STATE_COLOR,RENDER_STATE_TEXTURE };
-	cout << 123;
+    TCHAR *title = _T("hehe");
+    Screen::Create(1000, 1000, title);
 	getchar();
     return 0;
 }

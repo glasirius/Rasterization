@@ -6,8 +6,8 @@ public:
 	Screen();
 	~Screen();
 
-    static CreateScreenResult Create(int w, int h, const TCHAR *title);
-    static int ScreenClose();
+    static int Create(int w, int h, const TCHAR *title);
+    static void ScreenClose();
 
 private:
     static LRESULT screenEvents(HWND hWnd, UINT msg,
